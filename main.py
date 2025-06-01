@@ -100,6 +100,8 @@ def estimate_time_to_target(df, close, target, interval_minutes):
     price_diff = abs(close - target)
     candles_needed = price_diff / avg_change_per_candle
     minutes_needed = candles_needed * interval_minutes
+    if minutes_needed > 240:  # max 4 saat
+        return None
     return minutes_needed
 
 def format_price(price):
@@ -110,7 +112,7 @@ def format_price(price):
     return f"{formatted} $"
 
 def format_time(minutes):
-    if minutes is None or minutes > 240:
+    if minutes is None:
         return "Belirsiz"
     if minutes > 60:
         hours = minutes / 60
