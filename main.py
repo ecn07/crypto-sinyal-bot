@@ -120,9 +120,10 @@ def format_time(minutes):
     else:
         return f"{int(minutes)} dk"
 
-def send_telegram_message_sync(message):
+# Burada hata vardı, düzelttim:
+async def send_telegram_message(message):
     for chat_id in CHAT_IDS:
-        bot.send_message(chat_id=chat_id, text=message, parse_mode='Markdown')
+        await bot.send_message(chat_id=chat_id, text=message, parse_mode='Markdown')
 
 async def main():
     intervals = ['15m', '30m', '1h']
@@ -191,7 +192,7 @@ async def main():
             f"✨ *Ecn farkı!*"
         )
 
-        send_telegram_message_sync(message)
+        await send_telegram_message(message)
 
 if __name__ == "__main__":
     asyncio.run(main())
